@@ -331,3 +331,8 @@ ASALocalRun/
 
 # Build output for this sample
 *.out
+*.gcda
+*.gcno
+
+# Coverage Report
+lcov-report/

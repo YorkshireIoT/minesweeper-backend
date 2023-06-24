@@ -16,3 +16,14 @@ Click the link above to learn more but to get started you will need:
 
 Once you've got all this you can just click
 [this link to get started](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/YorkshireIoT/minesweeper-backend)
+
+Once VS Code has cloned the repository into your Dev Container you can just press
+Ctrl + Shift + B to build the sources or F5 to go straight into debugging it.
+
+## Testing
+
+To run the tests just run the following command:
+
+```bash
+$ make
+```
