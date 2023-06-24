@@ -16,7 +16,7 @@ static uint32_t shown_points = 0;
  * @return true     Coordinate is valid.
  * @return false    Coordinate is invalid.
  */
-static bool check_coordinate(minesweeper_coordinate coordinate, minesweeper_coordinate max_value, char *name) {
+static bool check_coordinate(minesweeper_coordinate coordinate, minesweeper_coordinate max_value, const char *name) {
     bool is_valid = true;
 
     if (coordinate >= max_value) {
@@ -218,15 +218,23 @@ MINESWEEPER_RESULT minesweeper_reset(MINESWEEPER_STATE grid[MINESWEEPER_BOARD_WI
         }
     }
     /* Now try to populate the given mines */
-    for (int i = 0; i < MINESWEEPER_MINE_COUNT; i++) {
+    for (uint16_t i = 0; i < MINESWEEPER_MINE_COUNT; i++) {
         /* Check each of the supplied mine coordinates would fit on the grid */
         if (!check_point(&mines[i])) {
             result = MINESWEEPER_RESULT_OUT_OF_BOUNDS;
             printf("Invalid coordinates for user supplied mine number %d\n", i);
             break;
         } else {
-            /* All good, set the mine on the grid */
-            grid[mines[i].x][mines[i].y] = MINESWEEPER_STATE_MINE_HIDDEN;
+            /* Check there isn't already a mine there */
+            if (grid[mines[i].x][mines[i].y] != MINESWEEPER_STATE_MINE_HIDDEN) {
+                /* All good, set the mine on the grid */
+                grid[mines[i].x][mines[i].y] = MINESWEEPER_STATE_MINE_HIDDEN;
+            } else {
+                result = MINESWEEPER_RESULT_OUT_OF_BOUNDS;
+                printf("Duplicate mine point supplied for point (%u, %u).\n",
+                    mines[i].x, mines[i].y);
+                break;
+            }
         }
     }
 
