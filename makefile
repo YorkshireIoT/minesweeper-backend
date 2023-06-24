@@ -71,9 +71,5 @@ lcov-report: coverage ## Generate lcov report
 	lcov --capture --directory . --output-file lcov-report/coverage.info
 	genhtml lcov-report/coverage.info --output-directory lcov-report
 
-deps: ## Install dependencies
-	sudo apt update
-	sudo apt-get install lcov clang-format
-
 ci: CFLAGS += -Werror
 ci: default
